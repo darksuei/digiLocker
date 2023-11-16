@@ -9,7 +9,7 @@ from functools import wraps
 
 from Crypto.Cipher import PKCS1_v1_5 as Cipher_PKCS1_v1_5
 from Crypto.PublicKey import RSA
-from flask import (Flask, escape, flash, jsonify, redirect, render_template,
+from flask import (Flask, flash, jsonify, redirect, render_template,
                    request, session, url_for)
 from werkzeug.utils import secure_filename
 
