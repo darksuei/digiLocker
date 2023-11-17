@@ -20,6 +20,7 @@ function loginWithSignature(address, signature, balance, login_url, onLoginReque
         } else {
             // We reached our target server, but it returned an error
             alert("Login failed - request status " + request.status);
+            console.log(request)
             if (typeof onLoginRequestError == 'function') {
                 onLoginRequestError(request);
             }
@@ -113,7 +114,7 @@ function web3Login(login_url, onTokenRequestFail, onTokenSignFail, onTokenSignSu
                     });
 
                 }
-            });
+            });loginWithSignature
 
 
         } else {

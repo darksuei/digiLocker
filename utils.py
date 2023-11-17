@@ -11,7 +11,7 @@ from Crypto.PublicKey import RSA
 
 def recover_to_addr(token, signature):
     msghash = defunct_hash_message(text=token)
-    address = w3.eth.account.recoverHash(msghash, signature=signature)
+    address = w3.eth.account._recover_hash(msghash, signature=signature)
     res = is_hex_address(address)
     return address
 

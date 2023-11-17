@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.8.16;
 pragma experimental ABIEncoderV2;
 
 contract digiLocker {

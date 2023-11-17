@@ -1,657 +1,634 @@
-var contractAddress = "0x6150C0D006Fb80a259257D0d4726735085b3667E";
+// var contractAddress = "0x6150C0D006Fb80a259257D0d4726735085b3667E";
+
+var contractAddress = "0xE9188473faD650c9A821c748830C3494bd36307A" // New one, deployed on sepolia test_net
 
 var abi = [
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: false,
-        internalType: "string",
-        name: "_email",
-        type: "string",
+        "indexed": false,
+        "internalType": "string",
+        "name": "_email",
+        "type": "string"
       },
       {
-        indexed: false,
-        internalType: "enum digiLocker.userType",
-        name: "utype",
-        type: "uint8",
+        "indexed": false,
+        "internalType": "enum digiLocker.userType",
+        "name": "utype",
+        "type": "uint8"
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "_useraddress",
-        type: "address",
-      },
+        "indexed": true,
+        "internalType": "address",
+        "name": "_useraddress",
+        "type": "address"
+      }
     ],
-    name: "registeredUserEvent",
-    type: "event",
+    "name": "registeredUserEvent",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: "bytes32",
-        name: "docid",
-        type: "bytes32",
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "docid",
+        "type": "bytes32"
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "docOwner",
-        type: "address",
+        "indexed": true,
+        "internalType": "address",
+        "name": "docOwner",
+        "type": "address"
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "sharedWith",
-        type: "address",
+        "indexed": true,
+        "internalType": "address",
+        "name": "sharedWith",
+        "type": "address"
       },
       {
-        indexed: false,
-        internalType: "uint8",
-        name: "permission",
-        type: "uint8",
-      },
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "permission",
+        "type": "uint8"
+      }
     ],
-    name: "sharedDocumentEvent",
-    type: "event",
+    "name": "sharedDocumentEvent",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: "bytes32",
-        name: "docid",
-        type: "bytes32",
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "docid",
+        "type": "bytes32"
       },
       {
-        indexed: false,
-        internalType: "bytes32",
-        name: "docHash",
-        type: "bytes32",
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "docHash",
+        "type": "bytes32"
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "user_addr",
-        type: "address",
-      },
+        "indexed": true,
+        "internalType": "address",
+        "name": "user_addr",
+        "type": "address"
+      }
     ],
-    name: "uploadDocumentEvent",
-    type: "event",
+    "name": "uploadDocumentEvent",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: "bytes32",
-        name: "docid",
-        type: "bytes32",
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "docid",
+        "type": "bytes32"
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "docOwner",
-        type: "address",
+        "indexed": true,
+        "internalType": "address",
+        "name": "docOwner",
+        "type": "address"
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "sharedWith",
-        type: "address",
-      },
+        "indexed": true,
+        "internalType": "address",
+        "name": "sharedWith",
+        "type": "address"
+      }
     ],
-    name: "verifyDocumentEvent",
-    type: "event",
+    "name": "verifyDocumentEvent",
+    "type": "event"
   },
   {
-    constant: true,
-    inputs: [
+    "inputs": [],
+    "name": "isalreadyRegisteredUser",
+    "outputs": [
       {
-        internalType: "bytes32",
-        name: "docId",
-        type: "bytes32",
-      },
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
     ],
-    name: "checkAlreadyUpload",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    constant: true,
-    inputs: [
+    "inputs": [],
+    "name": "getUseraccessKey",
+    "outputs": [
       {
-        internalType: "string",
-        name: "_email",
-        type: "string",
-      },
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
     ],
-    name: "getAddressByEmail",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    constant: true,
-    inputs: [],
-    name: "getDocCountByUserId",
-    outputs: [
+    "inputs": [],
+    "name": "getUserType",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
     ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    constant: true,
-    inputs: [
+    "inputs": [],
+    "name": "getRegisteredUser",
+    "outputs": [
       {
-        internalType: "bytes32",
-        name: "_docid_",
-        type: "bytes32",
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
       },
       {
-        internalType: "address",
-        name: "_uaddr_",
-        type: "address",
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       },
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
     ],
-    name: "getDocIndex",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    constant: true,
-    inputs: [
+    "inputs": [
       {
-        internalType: "bytes32",
-        name: "_docId",
-        type: "bytes32",
+        "internalType": "string",
+        "name": "_firstName",
+        "type": "string"
       },
+      {
+        "internalType": "string",
+        "name": "_lastName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_email",
+        "type": "string"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_utype",
+        "type": "uint8"
+      },
+      {
+        "internalType": "string",
+        "name": "_contact",
+        "type": "string"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "accessKey",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "string",
+        "name": "pubKey",
+        "type": "string"
+      }
     ],
-    name: "getDocumentListbyDocId",
-    outputs: [
+    "name": "registerUser",
+    "outputs": [
       {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
-      },
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-      {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
-      },
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
     ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    constant: true,
-    inputs: [
+    "inputs": [
       {
-        internalType: "bytes32",
-        name: "_docId",
-        type: "bytes32",
-      },
-      {
-        internalType: "address",
-        name: "docOwner",
-        type: "address",
-      },
+        "internalType": "bytes32",
+        "name": "docId",
+        "type": "bytes32"
+      }
     ],
-    name: "getDocumentName",
-    outputs: [
+    "name": "checkAlreadyUpload",
+    "outputs": [
       {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
     ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    constant: true,
-    inputs: [
+    "inputs": [],
+    "name": "getDocCountByUserId",
+    "outputs": [
       {
-        internalType: "address",
-        name: "_useradd",
-        type: "address",
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
-    name: "getDocumetList",
-    outputs: [
-      {
-        internalType: "string[]",
-        name: "",
-        type: "string[]",
-      },
-      {
-        internalType: "string[]",
-        name: "",
-        type: "string[]",
-      },
-      {
-        internalType: "bytes32[]",
-        name: "",
-        type: "bytes32[]",
-      },
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    constant: true,
-    inputs: [],
-    name: "getEmailIdByAddrss",
-    outputs: [
+    "inputs": [
       {
-        internalType: "string",
-        name: "",
-        type: "string",
+        "internalType": "string",
+        "name": "docName",
+        "type": "string"
       },
       {
-        internalType: "string",
-        name: "",
-        type: "string",
+        "internalType": "bytes32",
+        "name": "docId",
+        "type": "bytes32"
       },
       {
-        internalType: "string",
-        name: "",
-        type: "string",
+        "internalType": "bytes32",
+        "name": "docHash",
+        "type": "bytes32"
       },
+      {
+        "internalType": "string",
+        "name": "timestamp",
+        "type": "string"
+      }
     ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
+    "name": "uploadDocument",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    constant: true,
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "_usraddrs",
-        type: "address",
+        "internalType": "bytes32",
+        "name": "docid",
+        "type": "bytes32"
       },
+      {
+        "internalType": "uint8",
+        "name": "permission",
+        "type": "uint8"
+      },
+      {
+        "internalType": "address",
+        "name": "_requester",
+        "type": "address"
+      }
     ],
-    name: "getEmailIdByUsrAddr",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
+    "name": "shareDocumentwithUser",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    constant: true,
-    inputs: [
+    "inputs": [
       {
-        internalType: "bytes32",
-        name: "docId",
-        type: "bytes32",
+        "internalType": "bytes32",
+        "name": "docid",
+        "type": "bytes32"
       },
+      {
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      }
     ],
-    name: "getOwnerDocInfoByDocId",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
+    "name": "verifyUserDocument",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    constant: true,
-    inputs: [],
-    name: "getOwnerDocumetList",
-    outputs: [
+    "inputs": [
       {
-        internalType: "string[]",
-        name: "",
-        type: "string[]",
-      },
-      {
-        internalType: "string[]",
-        name: "",
-        type: "string[]",
-      },
-      {
-        internalType: "bytes32[]",
-        name: "",
-        type: "bytes32[]",
-      },
+        "internalType": "string",
+        "name": "email_",
+        "type": "string"
+      }
     ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
+    "name": "isValidSharableUser",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    constant: true,
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "_uaddr_",
-        type: "address",
-      },
+        "internalType": "bytes32",
+        "name": "docId",
+        "type": "bytes32"
+      }
     ],
-    name: "getPublicKey",
-    outputs: [
+    "name": "getOwnerDocInfoByDocId",
+    "outputs": [
       {
-        internalType: "string",
-        name: "",
-        type: "string",
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       },
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
     ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    constant: true,
-    inputs: [],
-    name: "getRegisteredUser",
-    outputs: [
+    "inputs": [],
+    "name": "getOwnerDocumetList",
+    "outputs": [
       {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
+        "internalType": "string[]",
+        "name": "",
+        "type": "string[]"
       },
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        "internalType": "string[]",
+        "name": "",
+        "type": "string[]"
       },
       {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
+        "internalType": "bytes32[]",
+        "name": "",
+        "type": "bytes32[]"
+      }
     ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    constant: true,
-    inputs: [],
-    name: "getUserType",
-    outputs: [
+    "inputs": [
       {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
+        "internalType": "address",
+        "name": "_useradd",
+        "type": "address"
+      }
     ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
+    "name": "getDocumetList",
+    "outputs": [
+      {
+        "internalType": "string[]",
+        "name": "",
+        "type": "string[]"
+      },
+      {
+        "internalType": "string[]",
+        "name": "",
+        "type": "string[]"
+      },
+      {
+        "internalType": "bytes32[]",
+        "name": "",
+        "type": "bytes32[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    constant: true,
-    inputs: [],
-    name: "getUseraccessKey",
-    outputs: [
+    "inputs": [
       {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
-      },
+        "internalType": "bytes32",
+        "name": "_docId",
+        "type": "bytes32"
+      }
     ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
+    "name": "getDocumentListbyDocId",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    constant: true,
-    inputs: [
+    "inputs": [],
+    "name": "getEmailIdByAddrss",
+    "outputs": [
       {
-        internalType: "string",
-        name: "email_",
-        type: "string",
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       },
-    ],
-    name: "isValidSharableUser",
-    outputs: [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       },
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
     ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    constant: true,
-    inputs: [],
-    name: "isalreadyRegisteredUser",
-    outputs: [
+    "inputs": [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
+        "internalType": "string",
+        "name": "_email",
+        "type": "string"
+      }
     ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
+    "name": "getAddressByEmail",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    constant: false,
-    inputs: [
+    "inputs": [
       {
-        internalType: "string",
-        name: "_firstName",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_lastName",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_email",
-        type: "string",
-      },
-      {
-        internalType: "uint8",
-        name: "_utype",
-        type: "uint8",
-      },
-      {
-        internalType: "string",
-        name: "_contact",
-        type: "string",
-      },
-      {
-        internalType: "bytes32",
-        name: "accessKey",
-        type: "bytes32",
-      },
-      {
-        internalType: "string",
-        name: "pubKey",
-        type: "string",
-      },
+        "internalType": "address",
+        "name": "_usraddrs",
+        "type": "address"
+      }
     ],
-    name: "registerUser",
-    outputs: [
+    "name": "getEmailIdByUsrAddr",
+    "outputs": [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       },
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
     ],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    constant: false,
-    inputs: [
+    "inputs": [
       {
-        internalType: "bytes32",
-        name: "docid",
-        type: "bytes32",
+        "internalType": "bytes32",
+        "name": "_docid_",
+        "type": "bytes32"
       },
       {
-        internalType: "uint8",
-        name: "permission",
-        type: "uint8",
-      },
-      {
-        internalType: "address",
-        name: "_requester",
-        type: "address",
-      },
+        "internalType": "address",
+        "name": "_uaddr_",
+        "type": "address"
+      }
     ],
-    name: "shareDocumentwithUser",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "getDocIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    constant: false,
-    inputs: [
+    "inputs": [
       {
-        internalType: "string",
-        name: "docName",
-        type: "string",
-      },
-      {
-        internalType: "bytes32",
-        name: "docId",
-        type: "bytes32",
-      },
-      {
-        internalType: "bytes32",
-        name: "docHash",
-        type: "bytes32",
-      },
-      {
-        internalType: "string",
-        name: "timestamp",
-        type: "string",
-      },
+        "internalType": "address",
+        "name": "_uaddr_",
+        "type": "address"
+      }
     ],
-    name: "uploadDocument",
-    outputs: [
+    "name": "getPublicKey",
+    "outputs": [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
     ],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    constant: false,
-    inputs: [
+    "inputs": [
       {
-        internalType: "bytes32",
-        name: "docid",
-        type: "bytes32",
+        "internalType": "bytes32",
+        "name": "_docId",
+        "type": "bytes32"
       },
       {
-        internalType: "address",
-        name: "_owner",
-        type: "address",
-      },
+        "internalType": "address",
+        "name": "docOwner",
+        "type": "address"
+      }
     ],
-    name: "verifyUserDocument",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-];
+    "name": "getDocumentName",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  }
+]

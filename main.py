@@ -34,8 +34,9 @@ def token_required(f):
         if 'x-access-tokens' in session.keys():
             token = session.get('x-access-tokens')
             try:
-                data = jwt.decode(token, app.config["SECRET_KEY"])
+                data = jwt.decode(token, app.config["SECRET_KEY"], algorithms='HS256')
                 user_address = session.get("user_address")
+                print("User address", user_address)
                 return f(user_address, *args, **kwargs)
             except Exception as e:
                 print("Exception occured", e)
@@ -53,7 +54,7 @@ def index(user_address):
 @token_required
 def dashboard(user_address = None):
     if not user_address:
-        flash("You are not authenticated. Please login again!")
+        flash("You are not authenticated. Please login again! 1")
         return redirect(url_for('index', next= "/".join(request.url.split('/')[3:])))
     return render_template("dashboard.html", user_address = user_address)
 
@@ -61,7 +62,7 @@ def dashboard(user_address = None):
 @token_required
 def registration(user_address):
     if not user_address:
-        flash("You are not authenticated. Please login again!")
+        flash("You are not authenticated. Please login again! 2")
         return redirect(url_for('index', next= "/".join(request.url.split('/')[3:])))
     return render_template("registration.html", user_address = user_address)
 
@@ -69,7 +70,7 @@ def registration(user_address):
 @token_required
 def upload_file(user_address):
     if not user_address:
-        flash("You are not authenticated. Please login again!")
+        flash("You are not authenticated. Please login again! 3")
         return redirect(url_for('index', next= "/".join(request.url.split('/')[3:])))
     return render_template("upload_doc.html", user_address=user_address)
 
@@ -234,12 +235,14 @@ def registration_postapi(user_address):
 @app.route("/api/login/metamask", methods = ['GET'])
 def login_api():
     urandomToken = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for i in range(32))
-    token = jwt.encode({
-            'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=120),
+    token = jwt.encode(
+        {
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=120),
             'token': urandomToken
-        }, 
-        app.config['SECRET_KEY']
-    ).decode("utf-8")
+        },
+        app.config['SECRET_KEY'],
+        algorithm='HS256'
+    )
     session['x-access-tokens'] = token
     return jsonify({"data": token, })
 

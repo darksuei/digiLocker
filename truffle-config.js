@@ -1,24 +1,22 @@
-require('dotenv').config();
-var HDWalletProvider = require("truffle-hdwallet-provider");
-var NEMONIC = process.env["NEMONIC"];
-var tokenKey = process.env["ENDPOINT_KEY"];
+const { NEMONIC, ENDPOINT_KEY, INFURA_API_KEY } = require("./environment");
+var HDWalletProvider = require("@truffle/hdwallet-provider");
 
 module.exports = {
      contracts_directory: "./contracts/",
      networks: {
-       sepolia: {
-         provider: function() {
-           return new HDWalletProvider(NEMONIC, "https://sepolia.infura.io/v3/" + tokenKey);
-         },
-         network_id: 77, // Sepolia testnet network id
-         gas: 6700000,
-         gasPrice: 10000000000
-       },
-       development: {
-         host: "localhost",
-         port: 8545,
-         network_id: "*" // Match any network id
-       }
+      development: {
+        host: "127.0.0.1",
+        port: 9545,
+        network_id: "*",
+      },
+      sepolia: {
+        provider: () => {
+          return new HDWalletProvider(NEMONIC, ENDPOINT_KEY)
+        },
+        network_id: 11155111,
+        gas: 29000000,
+        networkCheckTimeout: 100000,
+      },
      },
      compilers: {
        solc: {
@@ -26,7 +24,7 @@ module.exports = {
            enabled: true,
            runs: 200
          },
-         version: "0.5.17"
+         version: "0.8.16"
        }
      }
    };
