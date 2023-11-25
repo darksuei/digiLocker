@@ -133,7 +133,7 @@ function validateMasterCode() {
             if (res.valid == false) {
                 swal({
                     title: "Master code invalid",
-                    text: "Please enter the master Code corrctly!",
+                    text: "Please enter the master Code correctly!",
                     icon: "warning",
                     allowOutsideClick: false,
                     closeOnClickOutside: false,
