@@ -112,7 +112,7 @@ function checkWeb3(callback) {
 
 function logout() {
   var request = new XMLHttpRequest();
-  let logout_url = "/api/logout/metamask";
+  let logout_url = "/digilocker/api/logout/metamask";
   request.open("GET", logout_url, true);
   request.onload = function () {
     if (request.status >= 200 && request.status < 400) {

@@ -39,7 +39,7 @@ function getPublicKey() {
                                 hash = mkeyhash;
                                 var request = new XMLHttpRequest();
 
-                                let accesskey_url = "/api/user/accesskey";
+                                let accesskey_url = "/digilocker/api/user/accesskey";
                                 request.open('POST', accesskey_url, true);
 
                                 request.onload = function () {

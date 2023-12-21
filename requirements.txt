@@ -40,6 +40,7 @@ pycryptodome
 PyJWT
 # pypiwin32
 pyrsistent
+python-dotenv
 # pywin32
 requests
 requests-oauthlib

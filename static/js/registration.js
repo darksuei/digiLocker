@@ -2,7 +2,7 @@ function checkRegiterededUser() {
     getContract();
     contract.methods.isalreadyRegisteredUser().call().then(function (obj) {
         if (obj == true) {
-            window.location.replace("/dashboard");
+            window.location.replace("/digilocker/dashboard");
         }
     }).catch(function (error) {
         swal({

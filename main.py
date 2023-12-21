@@ -45,12 +45,12 @@ def token_required(f):
         return f(None, *args, **kwargs)
     return decorator
 
-@app.route("/")
+@app.route("/digilocker")
 @token_required
 def index(user_address):
     return render_template("index.html", user_address = user_address)
 
-@app.route("/dashboard", methods=['GET'])
+@app.route("/digilocker/dashboard", methods=['GET'])
 @token_required
 def dashboard(user_address = None):
     if not user_address:
@@ -58,7 +58,7 @@ def dashboard(user_address = None):
         return redirect(url_for('index', next= "/".join(request.url.split('/')[3:])))
     return render_template("dashboard.html", user_address = user_address)
 
-@app.route("/registration")
+@app.route("/digilocker/registration")
 @token_required
 def registration(user_address):
     if not user_address:
@@ -66,7 +66,7 @@ def registration(user_address):
         return redirect(url_for('index', next= "/".join(request.url.split('/')[3:])))
     return render_template("registration.html", user_address = user_address)
 
-@app.route('/dashboard/upload/doc', methods=['GET'])
+@app.route('/digilocker/dashboard/upload/doc', methods=['GET'])
 @token_required
 def upload_file(user_address):
     if not user_address:
@@ -75,7 +75,7 @@ def upload_file(user_address):
     return render_template("upload_doc.html", user_address=user_address)
 
 
-@app.route('/post/api/upload/doc', methods=['POST'])
+@app.route('/digilocker/post/api/upload/doc', methods=['POST'])
 @token_required
 def upload_file_postapi(user_address):
     if not user_address:
@@ -125,7 +125,7 @@ def upload_file_postapi(user_address):
 
             return jsonify({
                 "success": True, 
-                "redirect_url": "/dashboard",
+                "redirect_url": "/digilocker/dashboard",
                 "docHash": "0x" + docHash,
                 "docId": "0x" + docId,
                 "status_code": 200
@@ -138,7 +138,7 @@ def upload_file_postapi(user_address):
         })
 
 
-@app.route("/api/user/accesskey", methods = ['POST'])
+@app.route("/digilocker/api/user/accesskey", methods = ['POST'])
 @token_required
 def comparehash_digest_nd_senddockey(user_address):
     if not user_address:
@@ -175,7 +175,7 @@ def comparehash_digest_nd_senddockey(user_address):
         return jsonify({'success': False, "status_code": 400})   
 
 
-@app.route("/api/user/registration/", methods = ['POST'])
+@app.route("/digilocker/api/user/registration/", methods = ['POST'])
 @token_required
 def registration_postapi(user_address):
     try:
@@ -205,7 +205,7 @@ def registration_postapi(user_address):
 
             return {
                 'success': True, 
-                'redirect_url': "/dashboard",
+                'redirect_url': "/digilocker/dashboard",
                 "master_key_hash": mkey_digest,
                 'error': "Address verification done",
                 "status_code": 200
@@ -218,7 +218,7 @@ def registration_postapi(user_address):
             mail.send(msg)  
             return jsonify({
                 'success': True, 
-                'redirect_url': "/dashboard",
+                'redirect_url': "/digilocker/dashboard",
                 "pu": pu,
                 "status_code": 200
             })
@@ -226,13 +226,13 @@ def registration_postapi(user_address):
         print("resgister", e)
         return {
             'success': False, 
-            'redirect_url': "/",
+            'redirect_url': "/digilocker",
             'error': "Address verification failed",
             "status_code": 400
         }
 
 
-@app.route("/api/login/metamask", methods = ['GET'])
+@app.route("/digilocker/api/login/metamask", methods = ['GET'])
 def login_api():
     urandomToken = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for i in range(32))
     token = jwt.encode(
@@ -246,7 +246,7 @@ def login_api():
     session['x-access-tokens'] = token
     return jsonify({"data": token, })
 
-@app.route("/api/login/metamask", methods = ['POST'])
+@app.route("/digilocker/api/login/metamask", methods = ['POST'])
 def login_postapi():
     token = session.get('x-access-tokens')
     if not token:
@@ -262,17 +262,17 @@ def login_postapi():
         if address != recovered_addr:
             return {
                 'success': False, 
-                'redirect_url': "/",
+                'redirect_url': "/digilocker",
                 'error': "Address verification failed"
             }
         else:
             if is_registered == "false":
-                return {'success': True, 'redirect_url': "/registration"}
+                return {'success': True, 'redirect_url': "/digilocker/registration"}
             else:
-                return {'success': True, 'redirect_url': "/dashboard"}
+                return {'success': True, 'redirect_url': "/digilocker/dashboard"}
 
 
-@app.route("/api/get/verify/master/code", methods = ['GET'])
+@app.route("/digilocker/api/get/verify/master/code", methods = ['GET'])
 @token_required
 def verifyMasterCode(user_address):
     return {'success': True, 'valid': True, "status_code": 200}
@@ -286,16 +286,16 @@ def verifyMasterCode(user_address):
     #     return {'success': False, 'error': str(e), "status_code": 400}
 
 
-@app.route("/api/logout/metamask", methods = ['GET'])
+@app.route("/digilocker/api/logout/metamask", methods = ['GET'])
 @token_required
 def logout(user_address):
     print("logout")
     session.pop("x-access-tokens", None)
     session.pop("user_address", None)
-    return {'success': True, 'redirect_url': "/"}
+    return {'success': True, 'redirect_url': "/digilocker"}
 
 
-@app.route("/dashboard", methods = ['POST'])
+@app.route("/digilocker/dashboard", methods = ['POST'])
 @token_required
 def dashboardPost(user_address):
     if not user_address:
@@ -310,7 +310,7 @@ def dashboardPost(user_address):
         return redirect(url_for('searchDoc', docid=docid))
 
 
-@app.route("/search/uid", methods = ["GET"])
+@app.route("/digilocker/search/uid", methods = ["GET"])
 @token_required
 def searchUser(user_address):
     if not user_address:
@@ -328,7 +328,7 @@ def searchUser(user_address):
     )
 
 
-@app.route("/search/doc", methods = ["GET"])
+@app.route("/digilocker/search/doc", methods = ["GET"])
 @token_required
 def searchDoc(user_address):
     if not user_address:
@@ -345,7 +345,7 @@ def searchDoc(user_address):
         docid = request.args['docid']
     )
 
-@app.route("/post/api/send/request/mail", methods = ["POST"])
+@app.route("/digilocker/post/api/send/request/mail", methods = ["POST"])
 @token_required
 def sendRequestMailToResident(user_address):
     if not user_address:
@@ -375,12 +375,12 @@ def sendRequestMailToResident(user_address):
             MAIL_SENDER
         )
         mail.send(msg)
-        return jsonify({'success': True, 'redirect_url': "/dashboard", "status_code": 200})
+        return jsonify({'success': True, 'redirect_url': "/digilocker/dashboard", "status_code": 200})
     except Exception as e:
         return jsonify({'success': False, "error": str(e), "status_code": 400})
 
 
-@app.route("/post/api/send/aproove/mail", methods = ["POST"])
+@app.route("/digilocker/post/api/send/aproove/mail", methods = ["POST"])
 @token_required
 def sendAproovedMailToRequestor(user_address):
     if not user_address:
@@ -431,7 +431,7 @@ def sendAproovedMailToRequestor(user_address):
         return jsonify({'success': False, "error": str(e), "status_code": 400})
 
 
-@app.route("/resident/aproove/doc/", methods = ["GET"])
+@app.route("/digilocker/resident/aproove/doc/", methods = ["GET"])
 @token_required
 def approoveDoc(user_address):
     if not user_address:
@@ -461,7 +461,7 @@ def approoveDoc(user_address):
     )
 
 
-@app.route('/requestor/doc/access',methods=['GET'])
+@app.route('/digilocker/requestor/doc/access',methods=['GET'])
 @token_required
 def access_doc(user_address):
     if not user_address:
@@ -493,7 +493,7 @@ def access_doc(user_address):
 
 
 
-@app.route('/api/post/file/comparehash',methods=['POST'])
+@app.route('/digilocker/api/post/file/comparehash',methods=['POST'])
 @token_required
 def downloadEncryptedFileNcompareHash(user_address):
     if not user_address:
@@ -556,5 +556,5 @@ def downloadEncryptedFileNcompareHash(user_address):
         return {"success": False, "error": str(e)}
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", port= 5000, debug=True)
     # app.run(host="172.18.16.108", debug=True)

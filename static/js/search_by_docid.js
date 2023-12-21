@@ -31,7 +31,7 @@ function getDocumentDetails() {
             allowOutsideClick: false,
             closeOnClickOutside: false,
         }).then((value) => {
-            window.location.replace("/dashboard");
+            window.location.replace("/digilocker/dashboard");
         });
     }
 
@@ -152,7 +152,7 @@ function sendRequestMailAjax(doc_id, email, doc_name) {
                         closeOnClickOutside: false,
                     }).then((value) => {
                         if (value) {
-                            window.location.replace("/dashboard");
+                            window.location.replace("/digilocker/dashboard");
                         }
                     });
                 }

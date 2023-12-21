@@ -259,7 +259,7 @@ function sendRequestMailAjaxUser(doc_id, email, doc_name) {
                                 closeOnClickOutside: false,
                             }).then((value) => {
                                 if (value)
-                                    window.location.replace("/dashboard");
+                                    window.location.replace("/digilocker/dashboard");
                             });
                         }
                     } else {
