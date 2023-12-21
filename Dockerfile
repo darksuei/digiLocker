@@ -17,9 +17,6 @@ EXPOSE 5000
 # Define environment variable
 ENV FLASK_APP=main.py
 ENV FLASK_ENV=production
-#ENV NEMONIC="local unfold creek jealous cash despair vibrant blast exhaust scorpion wash legend"
-#ENV ENDPOINT_KEY="c96bb31fcd3040688efbd7cd2ee3cf99"
-#ENV INFURA_API_KEY="c96bb31fcd3040688efbd7cd2ee3cf99"
 
 # Run app.py when the container launches
 CMD ["python", "./main.py"]

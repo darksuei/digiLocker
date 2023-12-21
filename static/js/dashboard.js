@@ -1,9 +1,7 @@
 var documents = [];
 var docList = [];
 
-var resident_address = document
-  .getElementById("main_id")
-  .getAttribute("user_address");
+var resident_address = document.getElementById("main_id").getAttribute("user_address");
 
 function showBalance() {
   web3.eth
@@ -34,12 +32,10 @@ function displayResidentUploadedDocs() {
       }
 
       i = 0;
-      for (var k = 0; k < docs[1].length; k++)
-        documents[i++].timestamp = docs[1][k];
+      for (var k = 0; k < docs[1].length; k++) documents[i++].timestamp = docs[1][k];
 
       i = 0;
-      for (var k = 0; k < docs[2].length; k++)
-        documents[i++].doc_id = docs[2][k];
+      for (var k = 0; k < docs[2].length; k++) documents[i++].doc_id = docs[2][k];
       // i = 0;
       // for(var k = 0; k < docs[1].length; k++)
       //     documents[i++].timestamp = docs[3][k]
@@ -237,11 +233,7 @@ $(document).on("click", ".sharedoc", function () {
                               });
                             } else {
                               contract.methods
-                                .shareDocumentwithUser(
-                                  doc_id,
-                                  permission,
-                                  req_address
-                                )
+                                .shareDocumentwithUser(doc_id, permission, req_address)
                                 .send()
                                 .then(function (res3) {
                                   sendShareMailAjax(doc_id, email, doc_name);
@@ -250,9 +242,7 @@ $(document).on("click", ".sharedoc", function () {
                                 .catch(function (error) {
                                   swal({
                                     title: "Error!",
-                                    text:
-                                      "Error while checking user validity " +
-                                      error,
+                                    text: "Error while checking user validity " + error,
                                     icon: "error",
                                     allowOutsideClick: false,
                                     closeOnClickOutside: false,
@@ -271,17 +261,13 @@ $(document).on("click", ".sharedoc", function () {
                           });
                           $("#main-loader").hide();
                         };
-                        var formData =
-                          "master_key=" + mkey + "&mkeydigest=" + mkeyHash;
+                        var formData = "master_key=" + mkey + "&mkeydigest=" + mkeyHash;
                         formData += "&upload=" + "0";
                         request.setRequestHeader(
                           "Content-Type",
                           "application/x-www-form-urlencoded; charset=UTF-8"
                         );
-                        request.setRequestHeader(
-                          "X-CSRFToken",
-                          getCookie("csrftoken")
-                        );
+                        request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
                         request.send(formData);
                       });
                   } else {
@@ -352,7 +338,7 @@ function sendShareMailAjax(doc_id, email, doc_name) {
                   };
 
                   var request = new XMLHttpRequest();
-                  request.open("POST", "/post/api/send/aproove/mail", true);
+                  request.open("POST", "/digilocker/post/api/send/aproove/mail", true);
                   request.onload = function () {
                     $("#main-loader").hide();
 
@@ -399,10 +385,7 @@ function sendShareMailAjax(doc_id, email, doc_name) {
                     "Content-Type",
                     "application/x-www-form-urlencoded; charset=UTF-8"
                   );
-                  request.setRequestHeader(
-                    "X-CSRFToken",
-                    getCookie("csrftoken")
-                  );
+                  request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
 
                   var formData = "";
                   for (var key in data) {
@@ -436,9 +419,7 @@ function getDocName(docid, owner_address) {
     .getDocumentName(docid, owner_address)
     .call()
     .then(function (docname) {
-      $(`.docname[doc_id="${docid}"][docOwner="${owner_address}"]`).html(
-        docname
-      );
+      $(`.docname[doc_id="${docid}"][docOwner="${owner_address}"]`).html(docname);
     });
 }
 
@@ -472,9 +453,7 @@ $(document).on("click", ".verify_doc", function () {
             $("#declarationModel").modal("open");
             $("#doc_id").html(doc_id);
             $("#doc_owner").html(doc_owner);
-            $(".doc_name_modal").html(
-              "Verification of the Document :" + docname
-            );
+            $(".doc_name_modal").html("Verification of the Document :" + docname);
             $("#doc_name").html(docname);
 
             $("#verifyThisDoc").submit(function (e) {
@@ -495,15 +474,10 @@ $(document).on("click", ".verify_doc", function () {
                   $("#main-loader").hide();
                 })
                 .catch(function (error) {
-                  console.log(
-                    "verifyUserDocument() contract calling failed-" +
-                      error.message
-                  );
+                  console.log("verifyUserDocument() contract calling failed-" + error.message);
                   swal({
                     title: "Error!",
-                    text:
-                      "An error is encountered while running verifyUserDocument " +
-                      error.message,
+                    text: "An error is encountered while running verifyUserDocument " + error.message,
                     icon: "error",
                     allowOutsideClick: false,
                     closeOnClickOutside: false,
@@ -514,9 +488,7 @@ $(document).on("click", ".verify_doc", function () {
             });
           })
           .catch(function (error) {
-            console.log(
-              "error while calling getDocumentName() -" + error.message
-            );
+            console.log("error while calling getDocumentName() -" + error.message);
           });
       } //end if
       else {
@@ -605,13 +577,9 @@ function getSharedDocListForRequestor() {
               if (docGroup[property][j].permission == 0) ptype = "Read";
               else ptype = "Modify";
 
-              $(
-                `#sharedDocumentListByUser ul table[property="${property}"]`
-              ).append(
+              $(`#sharedDocumentListByUser ul table[property="${property}"]`).append(
                 `<tr>
-                        <td doc_id = "${
-                          docGroup[property][j].docId
-                        }">Document#${j + 1}</td>
+                        <td doc_id = "${docGroup[property][j].docId}">Document#${j + 1}</td>
                         <td class = "docname" 
                         doc_id = "${docGroup[property][j].docId}"
                         docOwner = "${property}"
